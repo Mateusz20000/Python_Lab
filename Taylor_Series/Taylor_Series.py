@@ -15,9 +15,10 @@ def taylor_series(fun, a, n: int):
     return r_fun
 
 
-T_sin = taylor_series(sin(x), 0, 7)
+T_sin = taylor_series(sin(x), 0, 17)
 
-if T_sin == x - x**3/6 + x**5/120: print(True)
 
 print(T_sin.subs(x, 1).evalf())
 print(sin(1).evalf())
+
+plot(T_sin, sin(x))
