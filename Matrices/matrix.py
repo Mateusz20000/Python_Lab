@@ -99,16 +99,29 @@ class Matrix:
 
 
 def transpode(mat: Matrix):
-    if (mat).__class__.__name__ == "Matrix":
-        val = []
-        for i in range(mat.size('m')):
-            val.append([])
-            for j in range(mat.size('n')):
-                val[i].append(mat.value[j][i])
+    if not (mat).__class__.__name__ == "Matrix": return None
 
-        return Matrix(val)
-    
-    return None
+    val = []
+    for i in range(mat.size('m')):
+        val.append([])
+        for j in range(mat.size('n')):
+            val[i].append(mat.value[j][i])
+
+    return Matrix(val)
+
+
+
+def adjoin(mat: Matrix):
+    if not (mat).__class__.__name__ == "Matrix" : return None
+
+    val = []
+    for i in range(mat.size('n')):
+        val.append([])
+        for j in range(mat.size('m')):
+            if mat.value[i][j].imag < 0 : val[i].append(mat.value[i][j].real + (-1) * mat.value[i][j].imag * 1j)
+            else : val[i].append(mat.value[i][j])
+
+    return Matrix(val)
 
 
 def determinant(mat: Matrix):
@@ -135,7 +148,8 @@ def determinant(mat: Matrix):
 # print( C * ( D + E ) == C * D + C * E)
 # print( C * D != D * C)
 
-A = Matrix([[2, 3, 0], [1, -2, 1]])
+A = Matrix([[2, 3, 3j], [1, -2, -2j]])
 print(A)
 print(transpode(A))
 print(transpode(6))
+print(adjoin(A))
