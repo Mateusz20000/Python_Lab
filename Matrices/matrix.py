@@ -90,6 +90,10 @@ class Matrix:
     
             return True
 
+    def is_singular(self):
+        # WRITE HERE CODE FOR CHECKING SINGULARITY OF MATRIX
+        return None
+
     def size(self, dim):
         if dim == 'n' : return self.n
         if dim == 'm' : return self.m
@@ -125,10 +129,59 @@ def adjoin(mat: Matrix):
 
 
 def determinant(mat: Matrix):
-    if (mat).__class__.__name__ == "Matrix": return None
+    if not (mat).__class__.__name__ == "Matrix": return None
     if not mat.is_quadratic(): return None
 
+    # Find if Matrix is singular
+
+    # Find if Matrix is individual
+
+
     # Elementary transformations
+
+    # Find first non 0 element
+
+    sign = 1
+    def swap_sign():
+        sign *= (-1)
+
+    i = 0
+    for i in range(mat.size('m')):
+        swap_sign = False
+        decision = None
+        decision_row = None
+        for j in range(i, mat.size('n')):
+            if mat.value[j][i] != 0:
+                # decision = mat.value[j][0]
+                decision_row = j
+                break
+
+        # Swap rows
+
+        if i == decision_row:
+            pass
+        else:
+            mat.value[i], mat.value[decision_row] = mat.value[decision_row], mat.value[i]
+            swap_sign()
+
+        # 0 elements below
+
+        for j in range(i + 1, mat.size('n')):
+            multiplyer = mat.value[j][i] / mat.value[i][i]
+            for k in range(i, mat.size('m')):
+                mat.value[j][k] -= multiplyer * mat.value[i][k]
+
+
+    determ = 1
+    for i in range(mat.size('n')):
+        determ *= mat.value[i][i]
+
+    determ = determ * sign
+
+    return determ
+
+
+
 
     
 
@@ -148,8 +201,19 @@ def determinant(mat: Matrix):
 # print( C * ( D + E ) == C * D + C * E)
 # print( C * D != D * C)
 
-A = Matrix([[2, 3, 3j], [1, -2, -2j]])
-print(A)
-print(transpode(A))
-print(transpode(6))
-print(adjoin(A))
+# A = Matrix([[2, 3, 3], [1, -2, -2], [7, 0, 9]])
+# Problmatic
+
+A = Matrix([[2, 3, 1], [1, 2, 4], [2, -2, 1]])
+
+# print(A)
+# print(transpode(A))
+# print(transpode(6))
+# print(adjoin(A))
+
+
+# Swap rows 
+# A.value[0], A.value[1] = A.value[1], A.value[0]
+# print(A)
+ 
+print(determinant(A))
